@@ -1,0 +1,15 @@
+{
+  "name": "authenticationapi",
+  "version": "1.0.0",
+  "description": "api to autheticate user",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Regis Rufino",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mocha": "^8.2.1"
+  }
+}
