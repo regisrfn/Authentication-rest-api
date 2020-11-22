@@ -4,13 +4,15 @@
   "description": "api to autheticate user",
   "main": "app.js",
   "scripts": {
-    "start":"nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon src/app.js",
+    "test": "nodemon --exec 'mocha'"
   },
   "author": "Regis Rufino",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mocha": "^8.2.1"
+    "mocha": "^8.2.1",
+    "mongoose": "^5.10.15"
   }
 }
