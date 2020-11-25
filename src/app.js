@@ -1,12 +1,13 @@
 const express = require('express')
 const app = express()
-
+const db = require('./config/db')
 // Import routes
 const authRoute = require('./routes/auth')
-
+require('dotenv').config()
 
 // routes
 app.use('/api/v1/user', authRoute)
+db.connect(`${process.env.DATABASE_API}/authApp_users_test`)
 
 app.get('/', (req,res) => {
     return res.status(200).json({
