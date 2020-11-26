@@ -4,8 +4,8 @@
   "description": "api to autheticate user",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon src/app.js",
-    "test": "nodemon --exec 'mocha src/test'"
+    "start": "node src/app.js",
+    "test": "node --exec 'mocha src/test'"
   },
   "author": "Regis Rufino",
   "license": "ISC",
