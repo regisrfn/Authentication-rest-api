@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const db = require('./database/db')
+const cors = require('cors')
 // Import routes
 const authRoute = require('./routes/auth')
 require('dotenv').config()
@@ -11,6 +12,17 @@ var corsOptions = {
     "preflightContinue": false,
     "optionsSuccessStatus": 204,
     "allowedHeaders": "Content-Type,Authorization"
+}
+
+if (process.env.NODE_ENV === 'production' &&  process.env.HTTP_LIST) {
+    const whitelist = process.env.HTTP_LIST.split(',')
+    corsOptions.origin = function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    }
 }
 
 app.use(cors(corsOptions))
