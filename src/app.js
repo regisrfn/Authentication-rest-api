@@ -16,20 +16,19 @@ var corsOptions = {
 
 if (process.env.NODE_ENV === 'production' && process.env.HTTP_LIST) {
     const whitelist = process.env.HTTP_LIST.split(',')
-    var corsOptionsDelegate = function (req, callback) {
-        console.log(req.header('Origin'))
-        if (whitelist.indexOf(req.headers.host) !== -1) {
-            corsOptions.origin = true  // reflect (enable) the requested origin in the CORS response
-            callback(null, corsOptions) // callback expects two parameters: error and options
+    corsOptions.origin = function (origin, callback) {
+        console.log(origin)
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
         } else {
-            corsOptions.origin = false  // disable CORS for this request
-            callback('WARNING: CORS Origin Not Allowed', corsOptions)
+            callback('Not allowed by CORS', false)
         }
     }
+
 }
 
 db.connect(`${process.env.DATABASE_API}/authApp_users_test`)
-app.use(cors(corsOptionsDelegate))
+app.use(cors(corsOptions))
 // routes
 app.use('/api/v1/user', authRoute)
 app.get('/', (req, res) => {
