@@ -6,7 +6,7 @@ function connect(URL) {
         useUnifiedTopology: true, useFindAndModify: false
     })
     mongoose.connection
-        .once('open', () => {console.log("CONNECTED") })
+        .once('open', () => {console.log("DB CONNECTED") })
         .on('error', (error) => {
             console.warn("Error CONNECTION", error)
             done(error)
