@@ -18,13 +18,10 @@ if (process.env.NODE_ENV === 'production' && process.env.HTTP_LIST) {
     const whitelist = process.env.HTTP_LIST.split(',')
     corsOptions.origin = function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
-            callback(null, true)
-        } else {
-            callback(null, false)
+            return true
         }
-        // callback(new Error('Not allowed by CORS'))
+        return false
     }
-
 }
 
 app.use(cors(corsOptions))
