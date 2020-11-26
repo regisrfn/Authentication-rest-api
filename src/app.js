@@ -17,7 +17,7 @@ var corsOptions = {
 if (process.env.NODE_ENV === 'production' && process.env.HTTP_LIST) {
     const whitelist = process.env.HTTP_LIST.split(',')
     var corsOptionsDelegate = function (req, callback) {
-        console.log(req.headers.host)
+        console.log(req.header('Origin'))
         if (whitelist.indexOf(req.headers.host) !== -1) {
             corsOptions.origin = true  // reflect (enable) the requested origin in the CORS response
             callback(null, corsOptions) // callback expects two parameters: error and options
