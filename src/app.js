@@ -16,19 +16,21 @@ var corsOptions = {
 
 if (process.env.NODE_ENV === 'production' && process.env.HTTP_LIST) {
     const whitelist = process.env.HTTP_LIST.split(',')
-    corsOptions.origin = function (origin, callback) {
-        if (whitelist.indexOf(origin) !== -1) {
-            return true
+    var corsOptionsDelegate = function (req, callback) {
+        if (whitelist.indexOf(req.headers.host) !== -1) {
+            corsOptions.origin = true  // reflect (enable) the requested origin in the CORS response
+            callback(null, corsOptions) // callback expects two parameters: error and options
+        } else {
+            corsOptions.origin = false  // disable CORS for this request
+            callback('WARNING: CORS Origin Not Allowed', corsOptions)
         }
-        return false
     }
 }
 
-app.use(cors(corsOptions))
+db.connect(`${process.env.DATABASE_API}/authApp_users_test`)
+app.use(cors(corsOptionsDelegate))
 // routes
 app.use('/api/v1/user', authRoute)
-db.connect(`${process.env.DATABASE_API}/authApp_users_test`)
-
 app.get('/', (req, res) => {
     return res.status(200).json({
         message: "Welcome Home"
