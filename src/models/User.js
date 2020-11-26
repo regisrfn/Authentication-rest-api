@@ -4,19 +4,20 @@ const Schema = db.mongoose.Schema
 const userSchema = new Schema({
     name: {
         type: String,
-        required: [true, 'Name is required'],
+        required: [true, 'name is required'],
         min: [6, "name too short"],
     },
     email: {
         type: String,
+        unique:true,
         validate: {
             validator: (email) => {
                 var re = /\S+@\S+\.\S+/
                 return re.test(email);
             },
-            message: "Incorrect format"
+            message: "invalid email format"
         },
-        required: [true, 'Email is required'],
+        required: [true, 'email is required'],
         min: [6, "email too short"],
     },
     password: {
