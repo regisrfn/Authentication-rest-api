@@ -10,7 +10,7 @@ describe('Validating records', () => {
             assert(false, 'error - user shouldn\'t be saved')
         } catch (error) {
             const { message } = error.errors['name']
-            assert.strictEqual(message, 'name is required')
+            assert.strictEqual(message, 'Name is required')
         }
     })
     it('saving name invalid', async () => {
@@ -20,7 +20,7 @@ describe('Validating records', () => {
             assert(false, 'error - user shouldn\'t be saved')
         } catch (error) {
             const { message } = error.errors['name']
-            assert.strictEqual(message, 'name too short')
+            assert.strictEqual(message, 'Invalid name size')
         }
     })
     it('saving name invalid - null', (done) => {
@@ -29,7 +29,7 @@ describe('Validating records', () => {
             .then(() => done('error - user shouldn\'t be saved'))
             .catch(err => {
                 const { message } = err.errors['name']
-                assert.strictEqual(message, 'name is required')
+                assert.strictEqual(message, 'Name is required')
                 done()
             })
             .catch((err) => {
@@ -44,16 +44,16 @@ describe('Validating records', () => {
             assert(false)
         } catch (error) {
             const { message } = error.errors['email']
-            assert.strictEqual(message, 'email is required')
+            assert.strictEqual(message, 'Email is required')
         }
     })
-    it('saving email invalid', (done) => {
+    it('saving email invalid 2', (done) => {
         const user = new User({ name: "Joe", email: 123456, password: 123456 })
         user.save()
             .then(() => done('error - user shouldn\'t be saved'))
             .catch(err => {
                 const { message } = err.errors['email']
-                assert.strictEqual(message, 'invalid format')
+                assert.strictEqual(message, 'Invalid email format')
                 done()
             })
             .catch((err) => {
@@ -66,7 +66,7 @@ describe('Validating records', () => {
             .then(() => done('error - user shouldn\'t be saved'))
             .catch(err => {
                 const { message } = err.errors['email']
-                assert.strictEqual(message, 'email too short')
+                assert.strictEqual(message, 'Invalid email size')
                 done()
             })
             .catch((err) => {
@@ -81,17 +81,17 @@ describe('Validating records', () => {
             assert(false, 'error - user shouldn\'t be saved')
         } catch (error) {
             const { message } = error.errors['password']
-            assert.strictEqual(message, 'password is required')
+            assert.strictEqual(message, 'Password is required')
         }
     })
-    it('Invalid password', async () => {
+    it('Invalid password 2', async () => {
         const user = new User({ name: "Joe", email: "joe@gmail.com",password:123})
         try {
             await user.save()
             assert(false, 'error - user shouldn\'t be saved')
         } catch (error) {
             const { message } = error.errors['password']
-            assert.strictEqual(message, 'password too short')
+            assert.strictEqual(message, 'Invalid password size')
         }
     })
 
