@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 function connect(URL) {
     mongoose.connect(URL, {
         useNewUrlParser: true,
+        useCreateIndex: true,
         useUnifiedTopology: true, useFindAndModify: false
     })
     mongoose.connection
