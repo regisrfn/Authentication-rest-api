@@ -1,5 +1,4 @@
 const assert = require('assert')
-const { getMaxListeners } = require('../models/User')
 const User = require('../models/User')
 
 describe('Creating records', () => {

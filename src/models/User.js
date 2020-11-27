@@ -1,4 +1,4 @@
-const db = require("../database/db")
+const {db} = require("../database/db")
 const Schema = db.mongoose.Schema
 
 const userSchema = new Schema({
@@ -29,7 +29,7 @@ const userSchema = new Schema({
         type: Date,
         default: Date.now()
     }
-})
+},{timestamps:true})
 
 const User = db.mongoose.model('user', userSchema)
 module.exports = User

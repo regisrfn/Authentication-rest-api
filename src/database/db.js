@@ -13,7 +13,7 @@ function connect(URL) {
         })
 }
 
-module.exports = {
+module.exports.db = {
     connect,
     mongoose
 }

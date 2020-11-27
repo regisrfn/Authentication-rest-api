@@ -1,9 +1,9 @@
 const express = require('express')
 const app = express()
-const db = require('./database/db')
+const {db} = require('./database/db')
 const cors = require('cors')
 // Import routes
-const authRoute = require('./routes/auth')
+const authRoute = require('./api/auth')
 const { corsOptions } = require("./config/corsOptions")
 require('dotenv').config()
 

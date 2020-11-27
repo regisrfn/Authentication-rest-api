@@ -1,5 +1,5 @@
 const User = require('../models/User')
-const db =  require('../database/db')
+const {db} =  require('../database/db')
 
 beforeEach((done) => {
     const users = db.mongoose.connection.collections.users
