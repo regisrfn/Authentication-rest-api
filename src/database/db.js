@@ -10,7 +10,6 @@ function connect(URL) {
         .once('open', () => {console.log("DB CONNECTED") })
         .on('error', (error) => {
             console.warn("Error CONNECTION", error)
-            done(error)
         })
 }
 
