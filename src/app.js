@@ -5,10 +5,11 @@ const cors = require('cors')
 // Import routes
 const authRoute = require('./api/auth')
 const { corsOptions } = require("./config/corsOptions")
+const config = require('config')
 require('dotenv').config()
 
 // DATABASE
-db.connect(`${process.env.DATABASE_API}/authApp_users_test`)
+db.connect(`${process.env.DATABASE_API}/${config.DBName}`)
 //Middleware
 app.use(cors(corsOptions))
 app.use(express.json())
