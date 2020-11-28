@@ -1,4 +1,6 @@
+const { get } = require('config')
 const { userService } = require('../services/userService')
+const errsMessage = ['email', 'name', 'password']
 
 exports.register = async (req, res, next) => {
     try {
@@ -8,10 +10,9 @@ exports.register = async (req, res, next) => {
             user: savedUser
         })
     } catch (error) {
-        console.log(error)
         return res.status(400).json({
             message: "Not OK",
-            user: null
+            error: getError(error.errors)
         })
     }
 }
@@ -20,4 +21,15 @@ exports.login = (req, res, next) => {
     return res.status(200).json({
         message: "Welcome Authentication login"
     })
+}
+
+function getError(errorObj) {
+    let err = {}
+    errsMessage.forEach(error => {
+        if (errorObj[error]) {
+            err[error] = { message: errorObj[error].message }
+            console.log(errorObj[error].message)
+        }
+    })
+    return err
 }
