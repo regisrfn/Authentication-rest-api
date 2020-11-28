@@ -1,13 +1,13 @@
 const express = require('express')
 const app = express()
-const { db } = require('./database/db')
-const cors = require('cors')
-// Import routes
-const authRoute = require('./api/auth')
-const { corsOptions } = require("./config/corsOptions")
 const config = require('config')
+const cors = require('cors')
+const { db } = require('./database/db')
+const { corsOptions } = require("./config/corsOptions")
 require('dotenv').config()
 
+// Import routes
+const authRoute = require('./api/auth')
 // DATABASE
 db.connect(`${process.env.DATABASE_API}/${config.DBName}`)
 //Middleware
