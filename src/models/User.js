@@ -1,4 +1,4 @@
-const {db} = require("../database/db")
+const { db } = require("../database/db")
 const Schema = db.mongoose.Schema
 
 const userSchema = new Schema({
@@ -9,7 +9,7 @@ const userSchema = new Schema({
     },
     email: {
         type: String,
-        unique:true,
+        unique: [true, 'This email is already being used '],
         required: [true, 'Email is required'],
         minlength: [6, "Invalid email size"],
         validate: {
@@ -25,11 +25,18 @@ const userSchema = new Schema({
         required: [true, 'Password is required'],
         minlength: [6, "Invalid password size"],
     },
-    date: {
-        type: Date,
-        default: Date.now()
+}, { timestamps: true })
+
+userSchema.post('save', function (error, doc, next) {
+    let err = {}
+    let key = 'email'
+    if (error.name === 'MongoError' && error.code === 11000 && key in error.keyValue) {
+        err[key] = { message: "Email not available" }
+        next({ errors: err })
+    } else {
+        next();
     }
-},{timestamps:true})
+});
 
 const User = db.mongoose.model('user', userSchema)
 module.exports = User
