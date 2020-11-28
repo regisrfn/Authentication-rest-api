@@ -1,4 +1,3 @@
-const { get } = require('config')
 const { userService } = require('../services/userService')
 const errsMessage = ['email', 'name', 'password']
 
@@ -28,7 +27,6 @@ function getError(errorObj) {
     errsMessage.forEach(error => {
         if (errorObj[error]) {
             err[error] = { message: errorObj[error].message }
-            console.log(errorObj[error].message)
         }
     })
     return err
