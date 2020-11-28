@@ -1,17 +1,23 @@
+require('dotenv').config()
+const assert = require('assert')
+const { db } = require('../database/db')
+const config = require('config') //we load the db location from the JSON files
 const User = require('../models/User')
-const {db} =  require('../database/db')
+
+before(async () => {
+    //development mode
+    //DATABASE_API = mongodb://localhost
+    try {
+        await db.connect(`${process.env.DATABASE_API}/${config.DBName}`)
+    } catch (error) {
+        assert.fail(error)
+    }
+})
 
 beforeEach((done) => {
-    const users = db.mongoose.connection.collections.users
-    users.drop()
-        .then(() => {
-            done()
-        })
-        .catch(err => {
-            if(err.message = 'ns not found'){
-                done()
-            }else{
-                done(err)
-            }
-        })
+    User.remove({}, (err) => {
+        done();
+        if (err)
+            done(err)
+    });
 })

@@ -1,5 +1,7 @@
 const assert = require('assert')
 const User = require('../models/User')
+let chai = require('chai');
+let should = chai.should();
 
 describe('Validating records', () => {
     ////////////////////////////INVALID NAME
@@ -60,7 +62,19 @@ describe('Validating records', () => {
                 done(err)
             })
     })
-    it('saving email invalid', (done) => {
+    it('saving email invalid 3', async () => {
+        try {
+            let user = new User({ name: "Joe", email: "joe@gmail.com", password: 123456 })
+            await user.save()
+            let newUser = new User({ name: "Joe", email: "joe@gmail.com", password: 123456 })
+            await newUser.save()
+            assert(false)
+        } catch (error) {
+            const { message } = error.errors['email']
+            assert.strictEqual(message, 'Email not available')
+        }
+    })
+    it('saving email invalid 4', (done) => {
         const user = new User({ name: "Joe", email: "1@1.c", password: 123456 })
         user.save()
             .then(() => done('error - user shouldn\'t be saved'))
