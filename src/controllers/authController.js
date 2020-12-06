@@ -4,14 +4,11 @@ const errsMessage = ['email', 'name', 'password']
 exports.register = async (req, res, next) => {
     try {
         const savedUser = await userService.saveUser(req.body)
-        return res.status(200).json({
-            message: "OK",
-            user: savedUser
-        })
+        return res.status(200).json(savedUser)
     } catch (error) {
         return res.status(400).json({
             message: "Not OK",
-            error: getError(error.errors)
+            errors: getErrorMsg(error)
         })
     }
 }
@@ -22,12 +19,10 @@ exports.login = (req, res, next) => {
     })
 }
 
-function getError(errorObj) {
-    let err = {}
-    errsMessage.forEach(error => {
-        if (errorObj[error]) {
-            err[error] = { message: errorObj[error].message }
-        }
-    })
-    return err
+function getErrorMsg(error) {
+    let errors = {}
+    for (err in error.errors) {
+        errors[err] = { message: error.errors[err].message}
+    }
+    return errors
 }
