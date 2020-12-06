@@ -4,6 +4,7 @@ const config = require('config')
 const cors = require('cors')
 const { db } = require('./database/db')
 const { corsOptions } = require("./config/corsOptions")
+const {apiExceptionHandler} = require('../src/exception/ApiExceptionHandler')
 require('dotenv').config()
 
 // Import routes
@@ -20,6 +21,7 @@ app.get('/', (req, res) => {
         message: "Welcome Home"
     })
 })
+app.use(apiExceptionHandler)
 
 var port = process.env.PORT || 5000
 app.listen(port)

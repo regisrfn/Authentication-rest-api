@@ -1,15 +1,15 @@
 const { userService } = require('../services/userService')
-const errsMessage = ['email', 'name', 'password']
+const apiExceptionRequest = require('../exception/ApiExceptionHandler')
 
 exports.register = async (req, res, next) => {
     try {
         const savedUser = await userService.saveUser(req.body)
         return res.status(200).json(savedUser)
     } catch (error) {
-        return res.status(400).json({
-            message: "Not OK",
-            errors: getErrorMsg(error)
-        })
+        const newError = new Error("Not OK");
+        newError.statusCode = 400
+        newError.errors = getErrorMsg(error)
+        next(newError)
     }
 }
 
