@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "export NODE_ENV=dev && nodemon src/app.js",
     "start": "node src/app.js",
-    "test": "nodemon --exec 'mocha src/test'"
+    "test": "export NODE_ENV=test nodemon --exec 'mocha src/test'"
   },
   "author": "Regis Rufino",
   "license": "ISC",
