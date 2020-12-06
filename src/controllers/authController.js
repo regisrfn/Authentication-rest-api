@@ -1,5 +1,4 @@
 const { userService } = require('../services/userService')
-const apiExceptionRequest = require('../exception/ApiExceptionHandler')
 
 exports.register = async (req, res, next) => {
     try {
