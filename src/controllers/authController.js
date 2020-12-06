@@ -1,15 +1,17 @@
 const { userService } = require('../services/userService')
+const { registerValidationAsync } = require('../validation/UserValidation')
 
-exports.register = async (req, res, next) => {
-    try {
-        const savedUser = await userService.saveUser(req.body)
-        return res.status(200).json(savedUser)
-    } catch (error) {
-        const newError = new Error("Not OK");
-        newError.statusCode = 400
-        newError.errors = getErrorMsg(error)
-        next(newError)
-    }
+exports.register = (req, res, next) => {
+    registerValidationAsync(req.body)
+        .then((value) => userService.saveUser(value))
+        .then((savedUser) => {
+            return res.status(200).json(savedUser)
+        }).catch(error => {
+            const newError = new Error("Not OK");
+            newError.statusCode = 400
+            newError.errors = handleErrorsMsg(error)
+            next(newError)
+        })
 }
 
 exports.login = (req, res, next) => {
@@ -18,10 +20,15 @@ exports.login = (req, res, next) => {
     })
 }
 
-function getErrorMsg(error) {
+function handleErrorsMsg(error) {
     let errors = {}
-    for (err in error.errors) {
-        errors[err] = { message: error.errors[err].message}
+    switch (error.type) {
+        case "Validation Error":
+            errors = error.errors
+        default:
+            for (err in error.errors) {
+                errors[err] = { message: error.errors[err].message }
+            }
     }
     return errors
 }
