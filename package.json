@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "export NODE_ENV=dev && nodemon src/app.js",
     "start": "node src/app.js",
-    "test": "mocha src/test"
+    "test": "nodemon --exec 'mocha src/test'"
   },
   "author": "Regis Rufino",
   "license": "ISC",
@@ -20,6 +20,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
-    "mocha": "^8.2.1"
+    "mocha": "^8.2.1",
+    "nodemon": "^2.0.6"
   }
 }

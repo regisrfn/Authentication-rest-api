@@ -20,15 +20,16 @@ describe('/POST user', () => {
                 // console.log(res)
                 res.should.have.status(200);
                 res.body.should.be.a('object');
-                res.body.should.have.property('user');
-                res.body.should.have.property('message').eql('OK');
+                res.body.should.have.property('name').eql("Joe");
+                res.body.should.have.property('password').eql('123456');
+                res.body.should.have.property('email').eql('joe@gmail.com');
                 done();
             })
     })
     it('it should NOT post a user', (done) => {
         let user = {
             name: undefined,
-            password: "123456",
+            password: undefined,
             email: "joe@gmail.com",
         }
         chai.request(server)
@@ -40,7 +41,7 @@ describe('/POST user', () => {
                 res.body.should.be.a('object');
                 res.body.should.not.have.property('user');
                 res.body.should.have.property('message').eql('Not OK');
-                res.body.should.have.property('error').eql({name:{message:"Name is required"}})
+                res.body.should.have.property('errors').to.deep.include({ name: { message: "Name is required" } })
                 done();
             })
     })
