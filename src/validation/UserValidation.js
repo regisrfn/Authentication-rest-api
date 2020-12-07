@@ -1,17 +1,11 @@
 const Joi = require('joi');
-const customError = new Error()
-customError.errors = {}
 
 const schema = Joi.object({
     name: Joi.string()
         .alphanum()
         .min(3)
         .max(30)
-        .required().error((error) => {
-            customError.type = "Validation Error"
-            customError.errors['name'] = {message: "Name is required"}
-            return customError
-        }),
+        .required().error(() => customError("Name is required")),
 
     password: Joi.string()
         .min(6)
@@ -28,4 +22,12 @@ exports.registerValidationAsync = (data) => {
 
 exports.registerValidation = (data) => {
     return schema.validate(data)
+}
+
+function customError(msg) {
+    const customError = new Error()
+    customError.errors = {}
+    customError.type = "Validation Error";
+    customError.errors['name'] = { message: msg };
+    return customError;
 }
