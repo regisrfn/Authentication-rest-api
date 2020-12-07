@@ -41,7 +41,48 @@ describe('/POST user', () => {
                 res.body.should.be.a('object');
                 res.body.should.not.have.property('user');
                 res.body.should.have.property('message').eql('Not OK');
-                res.body.should.have.property('errors').to.deep.include({ name: { message: "Name is required" } })
+                res.body.should.have.property('errors').to.deep.include({ name: { message: "Value is required" } })
+                done();
+            })
+    })
+
+    it('it should NOT post a user - invalid min name length', (done) => {
+        let user = {
+            name: "aa",
+            password: 123456,
+            email: "joe@gmail.com",
+        }
+        chai.request(server)
+            .post('/api/v1/user/register')
+            .send(user)
+            .end((err, res) => {
+                // console.log(res)
+                res.should.have.status(400);
+                res.body.should.be.a('object');
+                res.body.should.not.have.property('user');
+                res.body.should.have.property('message').eql('Not OK');
+                res.body.should.have.property('errors').to.deep.include({ name: { message: "Value should have at least 3 characters" } })
+                done();
+            })
+    })
+
+    it('it should NOT post a user - invalid max name length', (done) => {
+        let user = {
+            name: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            password: "123456",
+            email: "joe@gmail.com",
+        }
+        chai.request(server)
+            .post('/api/v1/user/register')
+            .send(user)
+            .end((err, res) => {
+                // console.log(res)
+                res.should.have.status(400);
+                res.body.should.be.a('object');
+                res.body.should.not.have.property('user');
+                res.body.should.have.property('message').eql('Not OK');
+                res.body.should.have.property('errors').to.deep.include({ name: { message: "Value should have at most 30 characters" } })
+                console.log(res.body)
                 done();
             })
     })

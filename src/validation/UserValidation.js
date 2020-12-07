@@ -5,7 +5,7 @@ const schema = Joi.object({
         .alphanum()
         .min(3)
         .max(30)
-        .required().error(() => customError("Name is required")),
+        .required().error((errors) => customError(errors, 'name')),
 
     password: Joi.string()
         .min(6)
@@ -24,10 +24,28 @@ exports.registerValidation = (data) => {
     return schema.validate(data)
 }
 
-function customError(msg) {
+function customError(errors, key) {
     const customError = new Error()
     customError.errors = {}
     customError.type = "Validation Error";
-    customError.errors['name'] = { message: msg };
+    errors.forEach(err => {
+        switch (err.code) {
+            case "any.empty":
+                customError.errors[key] = { message: "Value should not be empty" };
+                break
+            case "string.min":
+                console.log(err)
+                customError.errors[key] = { message: `Value should have at least ${err.local.limit} characters` };
+                break
+            case "string.max":
+                customError.errors[key] = { message: `Value should have at most ${err.local.limit} characters` }
+                break
+            case "any.required":
+                customError.errors[key] = { message: "Value is required" }
+                break
+            default:
+                break
+        }
+    })
     return customError;
 }

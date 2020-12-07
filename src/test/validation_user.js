@@ -12,7 +12,7 @@ describe('Validating records', () => {
             assert(false, 'error - user shouldn\'t be saved')
         } catch (error) {
             const { message } = error.errors['name']
-            assert.strictEqual(message, 'Name is required')
+            assert.strictEqual(message, 'Value is required')
         }
     })
     it('saving name invalid', async () => {
@@ -31,7 +31,7 @@ describe('Validating records', () => {
             .then(() => done('error - user shouldn\'t be saved'))
             .catch(err => {
                 const { message } = err.errors['name']
-                assert.strictEqual(message, 'Name is required')
+                assert.strictEqual(message, 'Value is required')
                 done()
             })
             .catch((err) => {

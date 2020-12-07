@@ -4,7 +4,7 @@ const Schema = db.mongoose.Schema
 const userSchema = new Schema({
     name: {
         type: String,
-        required: [true, 'Name is required'],
+        required: [true, 'Value is required'],
         minlength: [3, "Invalid name size"],
     },
     email: {
