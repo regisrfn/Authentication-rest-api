@@ -82,7 +82,6 @@ describe('/POST user', () => {
                 res.body.should.not.have.property('user');
                 res.body.should.have.property('message').eql('Not OK');
                 res.body.should.have.property('errors').to.deep.include({ name: { message: "Value should have at most 30 characters" } })
-                console.log(res.body)
                 done();
             })
     })

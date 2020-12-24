@@ -34,7 +34,6 @@ function customError(errors, key) {
                 customError.errors[key] = { message: "Value should not be empty" };
                 break
             case "string.min":
-                console.log(err)
                 customError.errors[key] = { message: `Value should have at least ${err.local.limit} characters` };
                 break
             case "string.max":

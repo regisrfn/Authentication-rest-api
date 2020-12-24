@@ -5,7 +5,7 @@ let should = chai.should();
 
 describe('Validating records', () => {
     ////////////////////////////INVALID NAME
-    it('saving name invalid - undefined', async () => {
+    it('it should not save user - name invalid -undefined', async () => {
         const user = new User({ name: undefined, email: "joe@gmail.com", password: 123456 })
         try {
             await user.save()
@@ -15,7 +15,7 @@ describe('Validating records', () => {
             assert.strictEqual(message, 'Value is required')
         }
     })
-    it('saving name invalid', async () => {
+    it('it should not save user - name invalid - size', async () => {
         const user = new User({ name: "Al", email: "joe@gmail.com", password: 123456 })
         try {
             await user.save()
@@ -25,7 +25,7 @@ describe('Validating records', () => {
             assert.strictEqual(message, 'Invalid name size')
         }
     })
-    it('saving name invalid - null', (done) => {
+    it('it should not save user - name invalid - null', (done) => {
         const user = new User({ email: "joe@gmail.com", password: 123456 })
         user.save()
             .then(() => done('error - user shouldn\'t be saved'))
@@ -39,7 +39,7 @@ describe('Validating records', () => {
             })
     })
     ///////////////////////////////////////INVALID EMAIL
-    it('saving email invalid', async () => {
+    it('it should not save user - invalid email - undefined', async () => {
         try {
             const user = new User({ name: "Joe", email: undefined, password: 123456 })
             await user.save()
@@ -49,7 +49,7 @@ describe('Validating records', () => {
             assert.strictEqual(message, 'Email is required')
         }
     })
-    it('saving email invalid 2', (done) => {
+    it('it should not save user - invalid email - not exists', (done) => {
         const user = new User({ name: "Joe", email: 123456, password: 123456 })
         user.save()
             .then(() => done('error - user shouldn\'t be saved'))
@@ -62,7 +62,7 @@ describe('Validating records', () => {
                 done(err)
             })
     })
-    it('saving email invalid 3', async () => {
+    it('it should not save user - invalid email - duplicated', async () => {
         try {
             let user = new User({ name: "Joe", email: "joe@gmail.com", password: 123456 })
             await user.save()
@@ -74,7 +74,7 @@ describe('Validating records', () => {
             assert.strictEqual(message, 'Email not available')
         }
     })
-    it('saving email invalid 4', (done) => {
+    it('it should not save user - invalid email - format', (done) => {
         const user = new User({ name: "Joe", email: "1@1.c", password: 123456 })
         user.save()
             .then(() => done('error - user shouldn\'t be saved'))
@@ -88,7 +88,7 @@ describe('Validating records', () => {
             })
     })
     /////////////////////////////INVALID PASSWORD
-    it('Invalid password', async () => {
+    it('it should not save user - invalid password - required', async () => {
         const user = new User({ name: "Joe", email: "joe@gmail.com"})
         try {
             await user.save()
@@ -98,7 +98,7 @@ describe('Validating records', () => {
             assert.strictEqual(message, 'Password is required')
         }
     })
-    it('Invalid password 2', async () => {
+    it('it should not save user - invalid password - size', async () => {
         const user = new User({ name: "Joe", email: "joe@gmail.com",password:123})
         try {
             await user.save()
